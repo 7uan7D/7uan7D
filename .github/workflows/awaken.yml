@@ -1,0 +1,25 @@
+name: Awaken
+
+on:
+  schedule:
+    - cron: '10 17 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - awaken.json
+      - .github/workflows/awaken.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: awaken-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  awaken:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: billtruong003/git-profile-awaken@68559615d7503a3c6c63ae27740b5ae99e92e0b3
